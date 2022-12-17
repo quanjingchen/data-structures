@@ -3,7 +3,6 @@ var BinarySearchTree = function(value) {
   bstMethods.left = null;
   bstMethods.right = null;
   bstMethods.value = value;
-
   return bstMethods;
 };
 
@@ -44,6 +43,50 @@ BinarySearchTree.prototype.depthFirstLog = function (cb) {
     this.right.depthFirstLog(cb);
   }
 };
+
+
+BinarySearchTree.prototype.breadthFirstLog = function () {
+  var queue = [];
+  if (this.left) {
+    queue.push(this.left);
+  }
+  if (this.right) {
+    queue.push(this.right);
+  }
+  if (this.value !== undefined) {
+    console.log(this.value);
+  }
+  while (queue.length > 0) {
+    var current = queue.shift();
+    if (current.value !== undefined) {
+      console.log(current.value);
+    }
+    if (current.left) {
+      queue.push(current.left);
+    }
+    if (current.right) {
+      queue.push(current.right);
+    }
+  }
+};
+
+BinarySearchTree.prototype.rebalance = function(memo) {
+  var result = [];
+  var output = memo || 0;
+  output += 1;
+  if (this.left && this.right) {
+    result = result.concat(this.left.rebalance(output));
+    result = result.concat(this.right.rebalance(output));
+  } else if (this.left && !this.right) {
+    result = result.concat(this.left.rebalance(output));
+  } else if (this.right && !this.left) {
+    result = result.concat(this.right.rebalance(output));
+  } else {
+    return [output];
+  }
+  return result;
+};
+
 
 /*
  * Complexity: What is the time complexity of the above functions?

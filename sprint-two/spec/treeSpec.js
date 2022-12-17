@@ -41,4 +41,32 @@ describe('tree', function() {
     expect(tree.contains(8)).to.equal(true);
   });
 
+  it('should have parent reference', function() {
+    tree.addChild(5);
+    tree.addChild(6);
+    expect(tree.parent).to.equal(null);
+  });
+
+  it('should remove from parent', function() {
+    tree.addChild(1);
+    tree.addChild(2);
+    console.log(tree.children);
+    tree.children[0].removeFromParent();
+    expect(tree.children.length).to.equal(1);
+  });
+
+  it('should traverse the tree and apply a callback function to every value contained in the tree', function() {
+    tree.addChild(1);
+    tree.addChild(2);
+    tree.children[0].addChild(3);
+    tree.children[0].addChild(4);
+    tree.children[1].addChild();
+    var result = [];
+    var add1 = function(node) {
+      result.push(node.value);
+    };
+    tree.traverse(add1);
+    expect(result).to.eql([1, 3, 4, 2]);
+  });
+
 });
