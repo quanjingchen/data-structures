@@ -42,12 +42,17 @@ Graph.prototype.hasEdge = function(fromNode, toNode) {
     // } else if (this.adjList[fromNode][i] === toNode) {
     //   return true;
     // }
+    // Solution review note: return this.adjList[toNode].contains(fromNode)
   }
   return false;
 };
 
 // Connects two nodes in a graph by adding an edge between them.
 Graph.prototype.addEdge = function(fromNode, toNode) {
+  //check if fromNode and toNode exist and if they are already connected
+  if (this.hasEdge(fromNode, toNode)) {
+    return;
+  }
   this.adjList[fromNode].push(toNode);
   this.adjList[toNode].push(fromNode);
 };

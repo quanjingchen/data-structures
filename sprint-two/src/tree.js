@@ -42,7 +42,7 @@ treeMethods.contains = function(target) {
 treeMethods.traverse = function(cb) {
   for (var i = 0; i < this.children.length; i++) {
     if (this.children[i].value !== undefined) {
-      cb(this.children[i]);
+      cb(this.children[i].value);
     }
     this.children[i].traverse(cb);
   }

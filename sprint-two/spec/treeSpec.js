@@ -62,8 +62,8 @@ describe('tree', function() {
     tree.children[0].addChild(4);
     tree.children[1].addChild();
     var result = [];
-    var add1 = function(node) {
-      result.push(node.value);
+    var add1 = function(value) {
+      result.push(value);
     };
     tree.traverse(add1);
     expect(result).to.eql([1, 3, 4, 2]);
