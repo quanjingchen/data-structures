@@ -97,7 +97,7 @@ BinarySearchTree.prototype.getLeafDepth = function(memo) {
   return result;
 };
 
-BinarySearchTree.prototype.rebalanceHelper = function(values) {
+BinarySearchTree.prototype.rebalanceHelperIteration = function(values) {
   var mid = Math.floor((values.length - 1) / 2);
   this.value = values[mid];
   [this.left, this.right] = [null, null];
@@ -115,8 +115,23 @@ BinarySearchTree.prototype.rebalanceHelper = function(values) {
     var temp = lvalues.length !== 0 ? lvalues[0] : rvalues[0];
     this.insert(temp);
   }
-
 };
+
+BinarySearchTree.prototype.rebalanceHelper = function(values, start, end) {
+  var mid = Math.floor((start + end) / 2);
+  this.value = values[mid];
+  this.left = null;
+  this.right = null;
+  if (start <= mid - 1) {
+    this.left = BinarySearchTree();
+    this.left.rebalanceHelper(values, start, mid - 1);
+  }
+  if (mid + 1 <= end) {
+    this.right = BinarySearchTree();
+    this.right.rebalanceHelper(values, mid + 1, end);
+  }
+};
+
 
 BinarySearchTree.prototype.rebalance = function() {
   var leafDepth = this.getLeafDepth();
@@ -126,7 +141,7 @@ BinarySearchTree.prototype.rebalance = function() {
       values.push(value);
     };
     this.depthFirstLog(cb);
-    this.rebalanceHelper(values);
+    this.rebalanceHelper(values, 0, values.length - 1);
   }
 };
 

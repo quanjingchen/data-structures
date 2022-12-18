@@ -76,9 +76,10 @@ describe('binarySearchTree', function() {
     binarySearchTree.rebalance();
     var result = [];
     var cb = function(value) { result.push(value); };
+
+
     binarySearchTree.depthFirstLogPreorder(cb);
     var expected = [8, 5, 4, 6, 7, 10, 9, 12, 15];
-    console.log(result);
     expect(result).to.eql(expected);
   });
 
